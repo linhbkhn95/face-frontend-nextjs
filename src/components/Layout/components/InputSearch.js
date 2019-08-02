@@ -10,7 +10,7 @@ const {
 export default class InputSearch extends React.Component {
     render() {
         return ( <
-            Search placeholder = "Tìm kiếm trong tài khoản GHTK"
+            Search placeholder = "Tìm kiếm trong đây"
             onSearch = {
                 value => console.log(value)
             }

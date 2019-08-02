@@ -1,4 +1,11 @@
-import { takeLatest, takeEvery,all, call, put, select } from "redux-saga/effects";
+import {
+  takeLatest,
+  takeEvery,
+  all,
+  call,
+  put,
+  select
+} from "redux-saga/effects";
 import {
   GET_RESOURCE_FAILURE,
   GET_RESOURCE_SUCCESS,
@@ -19,40 +26,59 @@ export function* getResourceSaga() {
 export function* createResourceSaga() {
   yield takeEvery(CREATE_RESOURCE_REQUEST, createResource);
 }
-function* getResource(action) {
-  try {
-    let response = yield call(getResourceAPI, action.meta);
-    if (response && response.data && response.data.data) {
-      let data = response.data.data;
-      if (!data.length) {
-        data = response.data.data;
-      }
 
-      yield put({
-        type: GET_RESOURCE_SUCCESS,
-        payload: {
-          name: action.name,
-          data
-        }
-      });
+function* getResource(action) {
+  let {
+    resolve,
+    reject
+  } = action;
+  try {
+    let response = yield call(getResourceAPI, action.path);
+    if (response && response.data && response.data.code === 0) {
+      if (typeof resolve === "function") {
+        console.log("TCL: function*getResource -> resolve")
+        resolve(response.data.data);
+      } else
+        yield put({
+          type: GET_RESOURCE_SUCCESS,
+          payload: {
+            name: action.name,
+            data:response.data.data
+          }
+        });
+
     } else {
-      yield put({ type: GET_RESOURCE_FAILURE });
+      if (typeof action.reject === "function") {
+        reject(response.data.errors);
+      } else yield put({
+        type: GET_RESOURCE_FAILURE
+      });
     }
   } catch (error) {
     console.log("TCL: }catch -> error", error);
-    yield put({ type: GET_RESOURCE_FAILURE });
+    yield put({
+      type: GET_RESOURCE_FAILURE
+    });
+    if (typeof action.reject === "function") {
+      reject(error);
+    }
   }
 }
+
 function* createResource(action) {
-  let { meta, name, resolve, reject } = action;
+  let {
+    meta,
+    name,
+    resolve,
+    reject
+  } = action;
 
   try {
     let response = yield call(createResourceAPI, meta);
     if (
       response &&
       response.data &&
-      response.data.code == 0 &&
-      response.data.data
+      response.data.code == 0
     ) {
       let data = response.data.data;
       resolve(data);
@@ -67,21 +93,31 @@ function* createResource(action) {
       console.log("error ==fail.,", response.data.errors);
 
       reject(response.data.errors);
-      yield put({ type: CREATE_RESOURCE_FAILURE });
+      yield put({
+        type: CREATE_RESOURCE_FAILURE
+      });
     }
   } catch (error) {
     console.log("error ==create.,", meta, name);
     reject(error);
-    yield put({ type: CREATE_RESOURCE_FAILURE });
+    yield put({
+      type: CREATE_RESOURCE_FAILURE
+    });
   }
 }
-function getResourceAPI({ urlApi }) {
-  console.log("urlApi", urlApi);
-  return get(urlApi);
+
+function getResourceAPI(path) {
+  console.log("urlApi", path);
+  return get(path);
 }
-function createResourceAPI({ path, data }) {
+
+function createResourceAPI({
+  path,
+  data
+}) {
   return post(path, data);
 }
+
 function* resource() {
   yield all([
     getResourceSaga(),

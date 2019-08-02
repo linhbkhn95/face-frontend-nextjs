@@ -15,10 +15,10 @@ import rootSaga from 'sagas';
 import thunk from "redux-thunk";
 import root from "window-or-global";
 
-import {
-  composeWithDevTools,
-  devToolsEnhancer
-} from "redux-devtools-extension";
+// import {
+//   composeWithDevTools,
+//   devToolsEnhancer
+// } from "redux-devtools-extension";
 const stateLogger = createLogger({
   stateTransformer: state => state.toJS()
 });
@@ -37,7 +37,8 @@ export const initStore = (preloadState = initialState) => {
   }
   const sagaMiddleware = createSagaMiddleware();
   // Add all middlewares into an array
-  const middleware = [sagaMiddleware,stateLogger];
+  // const middleware = [sagaMiddleware,stateLogger];
+  const middleware = [sagaMiddleware];
 
   // Add the Redux dev tools and middleware code together
   const composedEnhancers = compose(

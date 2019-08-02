@@ -32,6 +32,7 @@ class PicturesWall extends React.Component {
     fileList: []
   };
 
+
   handleCancel = () =>
     this.setState({
       previewVisible: false
@@ -63,8 +64,8 @@ class PicturesWall extends React.Component {
     };
     const pm = new Promise((resolve, reject) => {
       this.props.createResourceRequest(
-        "descriptor/prediction",
         "detection",
+        "api/descriptor/prediction",
         values,
         resolve,
         reject
@@ -76,7 +77,9 @@ class PicturesWall extends React.Component {
         console.log("TCL: process -> rs", rs);
         // self.props.dispatch(reset("IntroduceHost"));
         // self.props.close();
-        self.setState({ rs });
+        self.setState({
+          rs
+        });
       },
       err => {
         let errors = err.response.data.errors;
@@ -86,7 +89,10 @@ class PicturesWall extends React.Component {
   };
   previewOutPut(url) {
     console.log("TCL: previewOutPut");
-    this.setState({ previewImage: url, previewVisible: true });
+    this.setState({
+      previewImage: url,
+      previewVisible: true
+    });
   }
   render() {
     const {
@@ -98,14 +104,14 @@ class PicturesWall extends React.Component {
     const uploadButton = (
       <div>
         <Icon type="plus" />
-        <div className="ant-upload-text"> Upload </div>
+        <div className="ant-upload-text"> Upload </div>{" "}
       </div>
     );
     return (
       <React.Fragment>
         <Row>
           <Col lg={11} md={12}>
-            <Title level={4}> Dữ liệu cần nhận diện </Title>
+            <Title level={4}> Dữ liệu cần nhận diện </Title>{" "}
             <div
               style={{
                 padding: "50px",
@@ -127,8 +133,8 @@ class PicturesWall extends React.Component {
                 onPreview={this.handlePreview}
                 onChange={this.handleChange}
               >
-                {fileList.length >= 8 ? null : uploadButton}
-              </Upload>
+                {fileList.length >= 8 ? null : uploadButton}{" "}
+              </Upload>{" "}
               <Modal
                 visible={previewVisible}
                 footer={null}
@@ -140,10 +146,10 @@ class PicturesWall extends React.Component {
                     width: "100%"
                   }}
                   src={previewImage}
-                />
-              </Modal>
-            </div>
-          </Col>
+                />{" "}
+              </Modal>{" "}
+            </div>{" "}
+          </Col>{" "}
           <Col ld={2} md={2}>
             <Divider
               style={{
@@ -151,9 +157,16 @@ class PicturesWall extends React.Component {
               }}
               type="vertical"
             />
-          </Col>
-          <Col style={{ Height: "100vh", overflowY: "auto" }} md={11} md={11}>
-            <Title level={4}> Kết quả nhận diện </Title>
+          </Col>{" "}
+          <Col
+            style={{
+              Height: "100vh",
+              overflowY: "auto"
+            }}
+            md={11}
+            md={11}
+          >
+            <Title level={4}> Kết quả nhận diện </Title>{" "}
             {this.state.rs && this.state.rs.length
               ? this.state.rs.map(i => {
                   let url = `url("${i}")`;
@@ -175,35 +188,35 @@ class PicturesWall extends React.Component {
                       }}
                     >
                       {/* <Modal
-                        visible={previewVisibleOutPut}
-                        footer={null}
-                        onCancel={this.handleCancel}
-                      >
-                        <img
-                          alt="example"
-                          style={{
-                            width: "100%"
-                          }}
-                          src={i}
-                        />
-                      </Modal> */}
+                                                        visible={previewVisibleOutPut}
+                                                        footer={null}
+                                                        onCancel={this.handleCancel}
+                                                      >
+                                                        <img
+                                                          alt="example"
+                                                          style={{
+                                                            width: "100%"
+                                                          }}
+                                                          src={i}
+                                                        />
+                                                      </Modal> */}{" "}
                       {/* <img
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          maxHeight: "240px"
-                        }}
-                        src={i}
-                      /> */}
+                                                        style={{
+                                                          width: "100%",
+                                                          height: "100%",
+                                                          maxHeight: "240px"
+                                                        }}
+                                                        src={i}
+                                                      /> */}{" "}
                     </Col>
                   );
                 })
-              : null}
-          </Col>
-        </Row>
+              : null}{" "}
+          </Col>{" "}
+        </Row>{" "}
         <Col>
           <Divider />
-        </Col>
+        </Col>{" "}
         <Row
           style={{
             padding: "50px",
@@ -212,15 +225,17 @@ class PicturesWall extends React.Component {
           }}
         >
           <Button onClick={this.process} type="primary" icon={"eye"}>
-            Xử lý
-          </Button>
-        </Row>
+            Xử lý{" "}
+          </Button>{" "}
+        </Row>{" "}
       </React.Fragment>
     );
   }
 }
 PicturesWall = connect(
   null,
-  { createResourceRequest }
+  {
+    createResourceRequest
+  }
 )(PicturesWall);
 export default PicturesWall;

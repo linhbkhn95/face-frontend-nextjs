@@ -114,6 +114,7 @@ class LayoutWeb extends React.Component {
                 <img
                   className="logo"
                   // style={{ width: "50px" }}
+                  // src="https://miro.medium.com/max/1400/1*3Q2EzYMZVBEKbY0gkd5oeg.jpeg"
                   src="https://giaohangtietkiem.vn/wp-content/themes/giaohangtk/images/logo.png"
                 />
               ) : (

@@ -416,7 +416,7 @@ function (_React$Component) {
       var _ref;
 
       return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Search, {
-        placeholder: "T\xECm ki\u1EBFm trong t\xE0i kho\u1EA3n GHTK",
+        placeholder: "T\xECm ki\u1EBFm trong \u0111\xE2y",
         onSearch: function onSearch(value) {
           return console.log(value);
         },
@@ -656,6 +656,7 @@ function (_React$Component) {
         collapsed: this.state.collapsed
       }, !this.state.collapsed ? react__WEBPACK_IMPORTED_MODULE_12___default.a.createElement("img", {
         className: "logo" // style={{ width: "50px" }}
+        // src="https://miro.medium.com/max/1400/1*3Q2EzYMZVBEKbY0gkd5oeg.jpeg"
         ,
         src: "https://giaohangtietkiem.vn/wp-content/themes/giaohangtk/images/logo.png"
       }) : react__WEBPACK_IMPORTED_MODULE_12___default.a.createElement("div", {
@@ -858,7 +859,7 @@ var initialState = Object(immutable__WEBPACK_IMPORTED_MODULE_0__["fromJS"])({
 /*!***********************************!*\
   !*** ./src/constants/resource.js ***!
   \***********************************/
-/*! exports provided: GET_RESOURCE_REQUEST, GET_RESOURCE_SUCCESS, GET_RESOURCE_FAILURE, CREATE_RESOURCE_REQUEST, CREATE_RESOURCE_SUCCESS, CREATE_RESOURCE_FAILURE */
+/*! exports provided: GET_RESOURCE_REQUEST, GET_RESOURCE_SUCCESS, GET_RESOURCE_FAILURE, CREATE_RESOURCE_REQUEST, CREATE_RESOURCE_SUCCESS, CREATE_RESOURCE_FAILURE, SET_FACEAPI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -869,12 +870,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_RESOURCE_REQUEST", function() { return CREATE_RESOURCE_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_RESOURCE_SUCCESS", function() { return CREATE_RESOURCE_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_RESOURCE_FAILURE", function() { return CREATE_RESOURCE_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_FACEAPI", function() { return SET_FACEAPI; });
 var GET_RESOURCE_REQUEST = "GET_RESOURCE_REQUEST";
 var GET_RESOURCE_SUCCESS = "GET_RESOURCE_SUCCESS";
 var GET_RESOURCE_FAILURE = "GET_RESOURCE_FAILURE";
 var CREATE_RESOURCE_REQUEST = "CREATE_RESOURCE_REQUEST";
 var CREATE_RESOURCE_SUCCESS = "CREATE_RESOURCE_SUCCESS";
 var CREATE_RESOURCE_FAILURE = "CREATE_RESOURCE_FAILURE";
+var SET_FACEAPI = "SET_FACEAPI";
 
 /***/ }),
 
@@ -1375,8 +1378,7 @@ function logoutFlow() {
 }
 
 function getMeFlow() {
-  var _data;
-
+  var data;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function getMeFlow$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
@@ -1387,16 +1389,16 @@ function getMeFlow() {
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(getMeApi);
 
         case 4:
-          _data = _context3.sent;
-          console.log('data: ', _data);
+          data = _context3.sent;
+          console.log('data: ', data);
 
-          if (!(_data.data.code == 0)) {
+          if (!(data.data.code == 0)) {
             _context3.next = 11;
             break;
           }
 
           _context3.next = 9;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_4__["setCurrentUser"])(_data.data.data));
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])(Object(_actions_auth__WEBPACK_IMPORTED_MODULE_4__["setCurrentUser"])(data.data.data));
 
         case 9:
           _context3.next = 13;
@@ -1425,7 +1427,7 @@ function getMeFlow() {
 }
 
 function registerFlow(action) {
-  var resolve, reject, _data2, _data2$data$data, returnTo, url;
+  var resolve, reject, data, _data$data$data, returnTo, url;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function registerFlow$(_context4) {
     while (1) {
@@ -1437,15 +1439,15 @@ function registerFlow(action) {
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(registerApi, action.data);
 
         case 4:
-          _data2 = _context4.sent;
+          data = _context4.sent;
 
-          if (!(_data2.data.code == 0)) {
+          if (!(data.data.code == 0)) {
             _context4.next = 14;
             break;
           }
 
-          _data2$data$data = _data2.data.data, returnTo = _data2$data$data.returnTo, url = _data2$data$data.url;
-          console.log('dataCb: ', _data2.data.data); // inform Redux to set our client token, this is non blocking so...
+          _data$data$data = data.data.data, returnTo = _data$data$data.returnTo, url = _data$data$data.url;
+          console.log('dataCb: ', data.data.data); // inform Redux to set our client token, this is non blocking so...
           // yield put(setClient(token));
 
           alert('oc cho'); // .. also inform redux that our login was successful
@@ -1509,7 +1511,7 @@ function registerFlow(action) {
 }
 
 function loginFlow(actions) {
-  var username, password, resolve, reject, res, _res$data$data, _data3, _returnTo, _data3$url, _url;
+  var username, password, resolve, reject, res, _res$data$data, data, returnTo, _data$url, url;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function loginFlow$(_context5) {
     while (1) {
@@ -1529,8 +1531,8 @@ function loginFlow(actions) {
             break;
           }
 
-          _res$data$data = res.data.data, _data3 = _res$data$data === void 0 ? {} : _res$data$data;
-          _returnTo = _data3.returnTo, _data3$url = _data3.url, _url = _data3$url === void 0 ? '/' : _data3$url; // .. also inform redux that our login was successful
+          _res$data$data = res.data.data, data = _res$data$data === void 0 ? {} : _res$data$data;
+          returnTo = data.returnTo, _data$url = data.url, url = _data$url === void 0 ? '/' : _data$url; // .. also inform redux that our login was successful
 
           _context5.next = 11;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
@@ -1538,7 +1540,7 @@ function loginFlow(actions) {
           });
 
         case 11:
-          window.location.href = _url;
+          window.location.href = url;
           _context5.next = 15;
           break;
 
@@ -1789,72 +1791,92 @@ function createResourceSaga() {
 }
 
 function getResource(action) {
-  var response, data;
+  var resolve, reject, response;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function getResource$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          _context3.prev = 0;
-          _context3.next = 3;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(getResourceAPI, action.meta);
+          resolve = action.resolve, reject = action.reject;
+          _context3.prev = 1;
+          _context3.next = 4;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(getResourceAPI, action.path);
 
-        case 3:
+        case 4:
           response = _context3.sent;
 
-          if (!(response && response.data && response.data.data)) {
+          if (!(response && response.data && response.data.code === 0)) {
+            _context3.next = 15;
+            break;
+          }
+
+          if (!(typeof resolve === "function")) {
             _context3.next = 11;
             break;
           }
 
-          data = response.data.data;
-
-          if (!data.length) {
-            data = response.data.data;
-          }
-
-          _context3.next = 9;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
-            type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["GET_RESOURCE_SUCCESS"],
-            payload: {
-              name: action.name,
-              data: data
-            }
-          });
-
-        case 9:
+          console.log("TCL: function*getResource -> resolve");
+          resolve(response.data.data);
           _context3.next = 13;
           break;
 
         case 11:
           _context3.next = 13;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
-            type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["GET_RESOURCE_FAILURE"]
+            type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["GET_RESOURCE_SUCCESS"],
+            payload: {
+              name: action.name,
+              data: response.data.data
+            }
           });
 
         case 13:
-          _context3.next = 20;
+          _context3.next = 21;
           break;
 
         case 15:
-          _context3.prev = 15;
-          _context3.t0 = _context3["catch"](0);
-          console.log("TCL: }catch -> error", _context3.t0);
-          _context3.next = 20;
+          if (!(typeof action.reject === "function")) {
+            _context3.next = 19;
+            break;
+          }
+
+          reject(response.data.errors);
+          _context3.next = 21;
+          break;
+
+        case 19:
+          _context3.next = 21;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
             type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["GET_RESOURCE_FAILURE"]
           });
 
-        case 20:
+        case 21:
+          _context3.next = 29;
+          break;
+
+        case 23:
+          _context3.prev = 23;
+          _context3.t0 = _context3["catch"](1);
+          console.log("TCL: }catch -> error", _context3.t0);
+          _context3.next = 28;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
+            type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["GET_RESOURCE_FAILURE"]
+          });
+
+        case 28:
+          if (typeof action.reject === "function") {
+            reject(_context3.t0);
+          }
+
+        case 29:
         case "end":
           return _context3.stop();
       }
     }
-  }, _marked3, null, [[0, 15]]);
+  }, _marked3, null, [[1, 23]]);
 }
 
 function createResource(action) {
-  var meta, name, resolve, reject, _response, _data;
-
+  var meta, name, resolve, reject, response, data;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function createResource$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
@@ -1865,21 +1887,21 @@ function createResource(action) {
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(createResourceAPI, meta);
 
         case 4:
-          _response = _context4.sent;
+          response = _context4.sent;
 
-          if (!(_response && _response.data && _response.data.code == 0 && _response.data.data)) {
+          if (!(response && response.data && response.data.code == 0)) {
             _context4.next = 12;
             break;
           }
 
-          _data = _response.data.data;
-          resolve(_data);
+          data = response.data.data;
+          resolve(data);
           _context4.next = 10;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
             type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["CREATE_RESOURCE_SUCCESS"],
             payload: {
               name: name,
-              data: _data
+              data: data
             }
           });
 
@@ -1888,8 +1910,8 @@ function createResource(action) {
           break;
 
         case 12:
-          console.log("error ==fail.,", _response.data.errors);
-          reject(_response.data.errors);
+          console.log("error ==fail.,", response.data.errors);
+          reject(response.data.errors);
           _context4.next = 16;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
             type: _constants_resource__WEBPACK_IMPORTED_MODULE_2__["CREATE_RESOURCE_FAILURE"]
@@ -1917,15 +1939,14 @@ function createResource(action) {
   }, _marked4, null, [[1, 18]]);
 }
 
-function getResourceAPI(_ref) {
-  var urlApi = _ref.urlApi;
-  console.log("urlApi", urlApi);
-  return Object(_dataProvider__WEBPACK_IMPORTED_MODULE_3__["get"])(urlApi);
+function getResourceAPI(path) {
+  console.log("urlApi", path);
+  return Object(_dataProvider__WEBPACK_IMPORTED_MODULE_3__["get"])(path);
 }
 
-function createResourceAPI(_ref2) {
-  var path = _ref2.path,
-      data = _ref2.data;
+function createResourceAPI(_ref) {
+  var path = _ref.path,
+      data = _ref.data;
   return Object(_dataProvider__WEBPACK_IMPORTED_MODULE_3__["post"])(path, data);
 }
 
@@ -1972,8 +1993,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(redux_thunk__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var window_or_global__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! window-or-global */ "window-or-global");
 /* harmony import */ var window_or_global__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(window_or_global__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var redux_devtools_extension__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! redux-devtools-extension */ "redux-devtools-extension");
-/* harmony import */ var redux_devtools_extension__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(redux_devtools_extension__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -1981,7 +2000,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // import {
+//   composeWithDevTools,
+//   devToolsEnhancer
+// } from "redux-devtools-extension";
 
 var stateLogger = Object(redux_logger__WEBPACK_IMPORTED_MODULE_2__["createLogger"])({
   stateTransformer: function stateTransformer(state) {
@@ -2001,8 +2023,9 @@ var initStore = function initStore() {
   }
 
   var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_1___default()(); // Add all middlewares into an array
+  // const middleware = [sagaMiddleware,stateLogger];
 
-  var middleware = [sagaMiddleware, stateLogger]; // Add the Redux dev tools and middleware code together
+  var middleware = [sagaMiddleware]; // Add the Redux dev tools and middleware code together
 
   var composedEnhancers = redux__WEBPACK_IMPORTED_MODULE_0__["compose"].apply(void 0, [redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware)].concat(enhancers));
   var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_3__["default"], preloadState, // applyMiddleware(sagaMiddleware, stateLogger)
@@ -2352,17 +2375,6 @@ module.exports = require("react-redux");
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
-
-/***/ }),
-
-/***/ "redux-devtools-extension":
-/*!*******************************************!*\
-  !*** external "redux-devtools-extension" ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("redux-devtools-extension");
 
 /***/ }),
 
